@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <style>
+      .card 
+      {
+        width: 130px;
+        height: 200px;
+        border-style: solid;
+        text-align: center;
+        border-radius: 15px;
+        background-color: white;
+        position: absolute;
+        left: 00px;
+        top: 20px;
+        z-index: 2;
+      }
+      .card:active
+      {
+        z-index: 9998;
+        top: 0;
+      }
+      .card:hover
+      {
+        z-index: 9999;
+        top: 0;
+      }
+      .hand 
+      {
+        position: relative;
+      }
+      .card_type_top
+      {
+        position: absolute;
+        left : 5%;
+        top : 2%;
+        text-align: left;
+      }
+      .card_type_bottom
+      {
+        position: absolute;
+        right : 5%;
+        bottom : 2%;
+        text-align: right;
+      }
+      .red
+      { 
+        color: red;
+      }
+      .black
+      {
+        color: black;
+      }
+
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Testing card css</h1>
+    </header>
+    <div class="hand">
+      <div class="card red">
+        <div class="card_type_top">A</div>
+        <div class="card_type_bottom">A</div>
+      </div>
+      <div class="card black" style="left:30px">
+        <div class="card_type_top">K</div>
+        <div class="card_type_bottom">K</div>
+      </div>
+      <div class="card red" style="left:60px; color:red">
+        <div class="card_type_top">Q</div>
+        <div class="card_type_bottom">Q</div>
+      </div>
+    </div>
+  </body>
+</html>
+

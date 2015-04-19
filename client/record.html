@@ -1,4 +1,10 @@
 <template name="record">
-  <button>These are the records</button>
-  <p>1. Be a record</p>
+  <h2> Record a Game </h2>
+  <div>
+  <form class="NPlayers">
+    Number of Players:
+    <input type="number" class="number-input" id="n-players" min="2" max="10" step="1" value="{{ nPlayers }}">
+  </form>
+  There are {{ nPlayers }} players.
+  </div>
 </template>

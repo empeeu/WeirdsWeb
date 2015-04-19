@@ -43,3 +43,6 @@ header h1 {
   background : linear-gradient(180deg, grey, white);
 }
 
+.number-input {
+  width: 35px;
+}

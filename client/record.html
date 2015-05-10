@@ -1,10 +1,13 @@
 <template name="record">
   <h2> Record a Game </h2>
   <div>
+  Debug stuff: NPlayers Session var: {{ nPlayers }}
   <form class="NPlayers">
     Number of Players:
-    <input type="number" class="number-input" id="n-players" min="2" max="10" step="1" value="{{ nPlayers }}">
+    <input type="number" class="NumberInput" id="NPlayers" min="2" max="10" step="1" value= {{ nPlayers }}>
   </form>
-  There are {{ nPlayers }} players.
+  <form class="PlayerId" id="PlayerId">  
+  
+  </form>
   </div>
 </template>

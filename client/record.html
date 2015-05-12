@@ -8,8 +8,15 @@
   </form>
   <form class="PlayerId" id="PlayerId">  
     {{ #each Players }}
-       Player {{ this }}: <input type='text'  name="player_{{ this }}"/> <br>
+       Player {{ this }}: <input list='playerName' placeholder="Player Name" name="player_{{ this }}"/> 
+        <datalist id="playerName">
+          <option value="Bob"></option>
+          <option value="Sally"></option>
+          <option value="Peg"></option>
+        </datalist>
+        <br>
     {{ /each }}
+  <button text="Save">Save</button>
   </form>
   </div>
 </template>

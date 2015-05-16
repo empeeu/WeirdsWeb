@@ -1,4 +1,444 @@
 <template name="rules">
-  <button>These are the rules</button>
-  <p>1. Be a rule</p>
+  <h2> How to play weirds </h2>
+  <h3> Gameplay </h3>
+  <p> Weirds is cardgame played with 2-8 players.</p>
+  <p><strong> Setup: <br> </strong>
+First gather your players. Traditional means involves promises of brownies. Then deal for position by dealing one card to each person and switching seats until each person's card is in sequence. The person with the highest card is the dealer. Collectively decide how many cards should be dealt in the first round, usually 8. Deal this many cards to each player. Each consecutive round, one less card is dealt until only one card is dealt. Then the direction of play reverses and one card more is dealt until the starting number of cards is reached.  After dealing, leave the remaining cards as a draw stack in the middle. Turn one card up.
+  </p>
+  <p><strong> Play: <br> </strong>
+The first player resolves the upturned card to their benefit or detriment. For instance, if the first card is a 5, the dealer will actually go first as the direction of play has reversed. The active player then can play one allowable card on top of the stack. An allowable card is a card in the 'called' suit, if an eight has recently been played, a suit matching the suit of the card on top of the stack, a card of the same number as the the card on top of the stack, or the special card of an eight or a joker. If the upturned card is a 4, a 2, or a joker, the active player may play a matching card passing on the cumulative affect of the cards. For instance, a 2 on top of a 2 means the next player must either play a two or a joker or else draw four cards. If playing a card causes the active player to have just one card left, he must say 'last card' or else face a one card penalty if anyone asks how many cards he has. The first player to play all the cards in his hand win the round.
+ </p>
+ <p><strong> Scoring: <br> </strong>
+The person to have gone out first recieves zero points. All other players total the points of each card in their hand. This score is recorded. The player with the lowest score at the end of the game wins the game.
+ </p>
+
+
+  <h3>Cards</h3>
+  <div class="playingCards faceImages ">
+
+    <div class="clear"> </div>
+
+    <div class="rule">
+      <ul class="hand">
+        <li>
+          <a class="card rank-A spades">
+            <span class="rank">A</span>
+            <span class="suit">&spades;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-A hearts">
+            <span class="rank">A</span>
+            <span class="suit">&hearts;</span>
+          </a>
+        </li>
+          <li>
+          <a class="card rank-A diams">
+            <span class="rank">A</span>
+            <span class="suit">&diams;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-A clubs">
+            <span class="rank">A</span>
+            <span class="suit">&clubs;</span>
+          </a>
+        </li>
+      </ul>
+      <div class="rule-text no-wacky"> Cost: 20. Special: None</div>
+      <div class="rule-text wacky"> Cost: 20. Special: Resolve tokens (give card) or remove tokens</div>
+    </div>
+
+    <div class="rule">
+      <ul class="hand">
+        <li>
+          <a class="card rank-2 spades">
+            <span class="rank">2</span>
+            <span class="suit">&spades;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-2 hearts">
+            <span class="rank">2</span>
+            <span class="suit">&hearts;</span>
+          </a>
+        </li>
+          <li>
+          <a class="card rank-2 diams">
+            <span class="rank">2</span>
+            <span class="suit">&diams;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-2 clubs">
+            <span class="rank">2</span>
+            <span class="suit">&clubs;</span>
+          </a>
+        </li>
+      </ul>
+      <div class="rule-text">   Cost: 2. Special: Next player pick up 2 card. Stacks on other 2's. </div>
+    </div>
+
+    <div class="rule">
+      <ul class="hand">
+        <li>
+          <a class="card rank-4 spades">
+            <span class="rank">4</span>
+            <span class="suit">&spades;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-4 hearts">
+            <span class="rank">4</span>
+            <span class="suit">&hearts;</span>
+          </a>
+        </li>
+          <li>
+          <a class="card rank-4 diams">
+            <span class="rank">4</span>
+            <span class="suit">&diams;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-4 clubs">
+            <span class="rank">4</span>
+            <span class="suit">&clubs;</span>
+          </a>
+        </li>
+      </ul>
+      <div class="rule-text">   Cost: 4. Special: Skip next player (unless another 4 is played) </div>
+    </div>
+
+    <div class="rule">
+      <ul class="hand">
+        <li>
+          <a class="card rank-5 spades">
+            <span class="rank">5</span>
+            <span class="suit">&spades;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-5 hearts">
+            <span class="rank">5</span>
+            <span class="suit">&hearts;</span>
+          </a>
+        </li>
+          <li>
+          <a class="card rank-5 diams">
+            <span class="rank">5</span>
+            <span class="suit">&diams;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-5 clubs">
+            <span class="rank">5</span>
+            <span class="suit">&clubs;</span>
+          </a>
+        </li>
+      </ul>
+      <div class="rule-text">   Cost: 5. Special: Reverse direction. </div>
+    </div>
+
+    <div class="rule">
+      <ul class="hand">
+        <li>
+          <a class="card rank-8 spades">
+            <span class="rank">8</span>
+            <span class="suit">&spades;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-8 hearts">
+            <span class="rank">8</span>
+            <span class="suit">&hearts;</span>
+          </a>
+        </li>
+          <li>
+          <a class="card rank-8 diams">
+            <span class="rank">8</span>
+            <span class="suit">&diams;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-8 clubs">
+            <span class="rank">8</span>
+            <span class="suit">&clubs;</span>
+          </a>
+        </li>
+      </ul>
+      <div class="rule-text">   Cost: 8. Special: Change suit (can be played on any suit). </div>
+    </div>
+
+        <div class="rule">
+      <ul class="hand">
+        <li>
+          <a class="card little joker">
+            <span class="rank">*</span>
+            <span class="suit">_</span>
+          </a>
+        </li>
+        <li>
+          <a class="card big joker">
+            <span class="rank">*</span>
+            <span class="suit">_</span>
+          </a>
+        </li>
+      </ul>
+      <div class="rule-text">   Cost 50: Special: Next player takes 5. Stacks on 2's and other jokers  </div>
+    </div>
+
+    <div class="rule">
+      <ul class="hand">
+        <li>
+          <a class="card rank- spades">
+            <span class="rank">2</span>
+            <span class="suit">&spades;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-2 hearts">
+            <span class="rank">2</span>
+            <span class="suit">&hearts;</span>
+          </a>
+        </li>
+          <li>
+          <a class="card rank-2 diams">
+            <span class="rank">2</span>
+            <span class="suit">&diams;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-2 clubs">
+            <span class="rank">2</span>
+            <span class="suit">&clubs;</span>
+          </a>
+        </li>
+      </ul>
+      <div class="rule-text">   Cost: 2. Special: Next players pick up 2 cards. </div>
+    </div>
+
+    <div class="rule">
+      <ul class="hand">
+        <li>
+          <a class="card rank-3 spades">
+            <span class="rank">3</span>
+            <span class="suit">&spades;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-3 hearts">
+            <span class="rank">3</span>
+            <span class="suit">&hearts;</span>
+          </a>
+        </li>
+          <li>
+          <a class="card rank-3 diams">
+            <span class="rank">3</span>
+            <span class="suit">&diams;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-3 clubs">
+            <span class="rank">3</span>
+            <span class="suit">&clubs;</span>
+          </a>
+        </li>
+        <li class="no-wacky">
+          <a class="card rank-6 spades">
+            <span class="rank">6</span>
+            <span class="suit">&spades;</span>
+          </a>
+        </li>
+        <li class="no-wacky">
+          <a class="card rank-6 hearts">
+            <span class="rank">6</span>
+            <span class="suit">&hearts;</span>
+          </a>
+        </li>
+        <li class="no-wacky">
+          <a class="card rank-6 diams">
+            <span class="rank">6</span>
+            <span class="suit">&diams;</span>
+          </a>
+        </li>
+        <li class="no-wacky">
+          <a class="card rank-6 clubs">
+            <span class="rank">6</span>
+            <span class="suit">&clubs;</span>
+          </a>
+        </li>
+        <li class="no-wacky">
+          <a class="card rank-7 spades">
+            <span class="rank">7</span>
+            <span class="suit">&spades;</span>
+          </a>
+        </li>
+        <li class="no-wacky">
+          <a class="card rank-7 hearts">
+            <span class="rank">7</span>
+            <span class="suit">&hearts;</span>
+          </a>
+        </li>
+        <li class="no-wacky">
+          <a class="card rank-7 diams">
+            <span class="rank">7</span>
+            <span class="suit">&diams;</span>
+          </a>
+        </li>
+        <li class="no-wacky">
+          <a class="card rank-7 clubs">
+            <span class="rank">7</span>
+            <span class="suit">&clubs;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-9 spades">
+            <span class="rank">9</span>
+            <span class="suit">&spades;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-9 hearts">
+            <span class="rank">9</span>
+            <span class="suit">&hearts;</span>
+          </a>
+        </li>
+          <li>
+          <a class="card rank-9 diams">
+            <span class="rank">9</span>
+            <span class="suit">&diams;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-9 clubs">
+            <span class="rank">9</span>
+            <span class="suit">&clubs;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-10 spades">
+            <span class="rank">10</span>
+            <span class="suit">&spades;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-10 hearts">
+            <span class="rank">10</span>
+            <span class="suit">&hearts;</span>
+          </a>
+        </li>
+          <li>
+          <a class="card rank-10 diams">
+            <span class="rank">10</span>
+            <span class="suit">&diams;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-10 clubs">
+            <span class="rank">10</span>
+            <span class="suit">&clubs;</span>
+          </a>
+        </li>
+      </ul>
+      <div class="rule-text">   Cost: Face Value. Special: None. </div>
+    </div>
+
+    <div class="rule">
+      <ul class="hand">
+        <li>
+          <a class="card rank-j spades">
+            <span class="rank">J</span>
+            <span class="suit">&spades;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-j hearts">
+            <span class="rank">J</span>
+            <span class="suit">&hearts;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-j diams">
+            <span class="rank">J</span>
+            <span class="suit">&diams;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-j clubs">
+            <span class="rank">J</span>
+            <span class="suit">&clubs;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-q spades">
+            <span class="rank">Q</span>
+            <span class="suit">&spades;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-q hearts">
+            <span class="rank">Q</span>
+            <span class="suit">&hearts;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-q diams">
+            <span class="rank">Q</span>
+            <span class="suit">&diams;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-q clubs">
+            <span class="rank">Q</span>
+            <span class="suit">&clubs;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-k spades">
+            <span class="rank">K</span>
+            <span class="suit">&spades;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-k hearts">
+            <span class="rank">K</span>
+            <span class="suit">&hearts;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-k diams">
+            <span class="rank">K</span>
+            <span class="suit">&diams;</span>
+          </a>
+        </li>
+        <li>
+          <a class="card rank-k clubs">
+            <span class="rank">K</span>
+            <span class="suit">&clubs;</span>
+          </a>
+        </li>
+
+      </ul>
+      <div class="rule-text">  Cost: 1. Special: None.  </div>
+    </div>
+  </div> <!-- En facecard container -->
+
+
 </template>
+
+<!--
+A cost 20: wacky resolve
+2 take 2
+3 nada
+4 skip
+5 reverse
+6 ndad : wacky pass 1
+7 nada: wacky pass 2
+8 crazy 8's, wild, change suit (play any time)
+9 nada
+10 nada
+j, q, k: cost 1
+joker take 5 (can play on top of two)
+
+
+-->

@@ -1,3 +1,7 @@
+Router.configure({
+   layoutTemplate: 'web'  //can be any template name
+ });
+
 Router.map( function() {
   this.route('home', {
     path: '/'

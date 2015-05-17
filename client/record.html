@@ -1,23 +1,26 @@
 <template name="record">
   <h2> Record a Game </h2>
   <div>
-  Debug stuff: NPlayers Session var: {{ nPlayers }} at {{ Players }}
+  Debug stuff: NPlayers Session var: {{ nPlayers }} at {{ Players}}
   <form class="NPlayers">
     Number of Players:
     <input type="number" class="NumberInput" id="NPlayers" min="2" max="10" step="1" value= {{ nPlayers }}>
   </form>
   <form class="PlayerId" id="PlayerId">  
     {{ #each Players }}
-       Player {{ this }}: <input list='playerName' placeholder="Player Name" name="player_{{ this }}"/> 
-        <datalist id="playerName">
-          <option value="Bob"></option>
-          <option value="Sally"></option>
-          <option value="Peg"></option>
-        </datalist>
+       Player {{ order }}: <input list='playerName' placeholder="Player Name" name="player" value="{{ name }}"/> 
+       {{>weirdplayers_datalist}}
         <br>
     {{ /each }}
-  <button text="Save">Save</button>
+  <button id="savebutton" text="Save">Save</button>
   </form>
   </div>
 </template>
 
+<template name="weirdplayers_datalist">
+  <datalist id="playerName">
+    {{ #each WeirdPlayer }}
+      <option value="{{ name }}"></option>
+    {{ /each }}
+  </datalist>
+</template>

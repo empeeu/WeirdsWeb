@@ -1,3 +1,4 @@
+// Is the next line still actually needed?
 WeirdPlayersDB = new Mongo.Collection("weird_players");
 
 var Player = [];

@@ -44,10 +44,13 @@ function updatePlayers(nPlayers) {
   for (i=0; i < Players.length; i++){
     if (formPlayers.length > i) {
       Players[i] = {'order': i, 'name' : formPlayers[i].value}
-      if (checkDupName(Players, i)){
-        Players[i].error = "Same player cannot play twice!"
-      }
     }
+    if (Players[i].name == '') {
+      Players[i].error = " Pick a player or add a new one."
+    }
+    else if (checkDupName(Players, i)){
+      Players[i].error = " Same player cannot play twice!"  
+    }        
   }
   while (Players.length > nPlayers) {
     Players.pop()

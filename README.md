@@ -8,7 +8,7 @@ Built on meteor.
 
 1. underscore
 2. iron:router
-#3. mrt:bootstrap-3
+3. bootstrap
 4. less
 5. nemo64:bootstrap
 6. Clone stylesheet boiler plate

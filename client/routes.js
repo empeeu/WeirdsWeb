@@ -11,6 +11,15 @@ Router.map( function() {
 Router.map( function() {
   this.route('rules');
   this.route('record');
+  this.route('record-update', {
+    path: '/record/:_id',
+    data: function(){
+      return GameRecordDB.findOne(this.params._id);
+    },
+    data_id: function() {
+      return this.params._id;
+    }
+  });
   this.route('lobby');
   this.route('game', {
     path: '/game/:_id',

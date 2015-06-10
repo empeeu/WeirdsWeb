@@ -10,11 +10,20 @@
     {{ #each Players }}
        Player {{ order }}: <input list='playerName' placeholder="Player Name" name="player" id="player" value="{{ name }}"/> 
        {{ error }}
-       {{>weirdplayers_datalist}}
+       {{ >weirdplayers_datalist }}
         <br>
     {{ /each }}
-  <button id="savebutton" text="Save">Save</button>
+  <button id="savebutton" text="Save">Save</button> {{ Message }}
   </form>
+  </div>
+
+  <div>
+    <h2> Active Games </h2>
+    <ul>
+    {{ #each activeRecords }}
+      {{ >recordActive }}
+    {{ /each }}
+    </ul>
   </div>
 </template>
 
@@ -24,4 +33,29 @@
       <option value="{{ name }}"></option>
     {{ /each }}
   </datalist>
+</template>
+
+<template name="recordActive">
+  <li> 
+    <a href="{{ pathFor 'record-update' _id }}">{{ _id }}</a>,
+    created {{ date }}, with {{ n_players }} players
+    <button id="ag_delete" name="{{ _id }}"> Delete </button>
+  </li>
+</template>
+
+<template name="recordUpdate">
+   This is updating record number {{ _id }}, started {{ date }} with {{ n_players }} players. 
+   <table id="RoundContainer">
+     {{ #each players }}
+       <tr>
+       <th>{{ name }}</th> {{ >recordUpdateLine }}
+       </tr>
+     {{ /each }}
+   </table>
+</template>
+
+<template name="recordUpdateLine">
+  {{ #each score }}
+    <td><input type='number' style='width:40px' min=0 max=999/></td>
+  {{ /each }}
 </template>

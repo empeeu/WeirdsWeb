@@ -1,9 +1,11 @@
 // This Line is needed but is also duplicated on the serverside for now
 WeirdPlayersDB = new Mongo.Collection("weird_players");
+GameRecordDB = new Mongo.Collection("weird_game_record");
 
 // The number of players, and default player names
 Session.setDefault('Record:nPlayers', 2)
 Session.setDefault('Record:Players', [{'order' : 0, 'name' : ''}, {'order' : 1, 'name': ''}])
+Session.setDefault('Record:Message', '')
 
 
 // Template helpers to expose variables to the record.html file
@@ -16,6 +18,15 @@ Template.record.helpers({
   Players : function() {
     var Players = Session.get('Record:Players');
     return Players
+  },
+  // Messages to help user
+  Message : function () {
+    return Session.get('Record:Message');
+  },
+  // Active records
+  activeRecords : function() {
+    var activeRecords = GameRecordDB.find({active : true});
+    return activeRecords
   }
 });
 // WEIRDPLAYERS_DATALIST template
@@ -82,13 +93,63 @@ Template.record.events({
     event.preventDefault();
     var nPlayers = Session.get('Record:nPlayers');
     var Players = Session.get('Record:Players');
+    updatePlayers(nPlayers)
+    var valid = true;
     for (i = 0; i < Players.length; i++){
+      if (Players[i].error != null) {
+        valid = false;
+      }
+      if (Players[i].name == '') {
+        valid = false;
+      }
       if (WeirdPlayersDB.findOne({name: Players[i].name}) == null) {
         WeirdPlayersDB.insert({name : Players[i].name});    
       }
     }
     Session.set('Record:Players', Players);
+    if (valid){
+      Session.set('Record:Message', "")
+      var record;
+      var n_rounds = 16; // default number of rounds
+      // Make an empty score structure to initialize score for players
+      empty_score = [];
+      for (i=0; i<n_rounds; i++){
+        empty_score.push(i);
+      }
+      for (i=0; i<Players.length; i++){
+        Players[i].score = empty_score;
+      }
+      record_id = GameRecordDB.insert({
+         'players' : Players,
+         'n_players' : nPlayers,
+         'date' : new Date(),
+         'n_rounds' : n_rounds,
+         'n_starting_cards' : 8,
+         'n_cards_per_round' : [8, 7, 6, 5, 4, 3, 2, 1, 1, 2, 3, 4, 5, 6, 7, 8],
+         'irregular' : false,
+         'variation' : 'standard', 
+         'n_jokers' : 6, 
+         'active' : true})
+      Router.go('record-update', {'_id' : record_id })
+    }
+    else {
+      Session.set('Record:Message', "Please fix all errors before saving record")
+    }
   }
 });
 
+// Let's do the helper functions for the recordActive template
+Template.recordUpdate.helpers({
+    data : function() {
+      return GameRecordDB.findOne()
+    }
+});
+
+Template.recordActive.events({
+  "click #ag_delete " : function(event) {
+    event.preventDefault();
+    var id = event.target.name;
+    GameRecordDB.remove(id);
+  }
+});
 

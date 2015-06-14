@@ -44,14 +44,29 @@
 </template>
 
 <template name="recordUpdate">
+  CHECK {{ check }} CHECK
+  <br>
    This is updating record number {{ _id }}, started {{ date }} with {{ n_players }} players. 
    <table id="RoundContainer">
+   <tr>
+     <th> Round </th><th> # cards </th>
      {{ #each players }}
-       <tr>
-       <th>{{ name }}</th> {{ >recordUpdateLine }}
-       </tr>
+       <th> {{ name }} </th> 
      {{ /each }}
+   </tr>
+
+   {{ #each round_num }}
+     <tr>
+       <td> {{ . }} </td> <td> {{! ../n_cards_per_round }} </td>
+       {{ #each ../players }}
+         <td>
+           <input type='number' style='width:40px' min=0 max=999 name="{{ order }}" id="{{ .. }}"/>
+         </td>
+       {{ /each }}
+     </tr>
+   {{ /each }}
    </table>
+   <button> Finish Game </button>
 </template>
 
 <template name="recordUpdateLine">

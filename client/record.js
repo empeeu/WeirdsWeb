@@ -140,9 +140,25 @@ Template.record.events({
 
 // Let's do the helper functions for the recordActive template
 Template.recordUpdate.helpers({
-    data : function() {
-      return GameRecordDB.findOne()
+    round_num : function() {
+      return _.range(this.n_rounds)
+    },
+    data: function(){
+      return GameRecordDB.findOne(this._id);
+    },
+    check : function(){
+      console.log(this) // how does one access the other helpers?
+      return this.round_num
     }
+});
+Template.recordUpdate.events({
+  "change input" : function(event) {
+    var player_number = event.target.name
+    var round = event.target.id
+    record = GameRecordDB.findOne(this._id)
+    record.players[player_number][round] = event.target.value
+    GameRecordDB.update(this._id, {"players": record.players})
+  }
 });
 
 Template.recordActive.events({

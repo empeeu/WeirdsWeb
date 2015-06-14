@@ -16,9 +16,6 @@ Router.map( function() {
     data: function(){
       return GameRecordDB.findOne(this.params._id);
     },
-    data_id: function() {
-      return this.params._id;
-    }
   });
   this.route('lobby');
   this.route('game', {

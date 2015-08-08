@@ -45,17 +45,18 @@
 
 <template name="recordUpdate">
    This is updating record number {{ _id }}, started {{ date }} with {{ n_players }} players. 
+   <form>
    <table id="RoundContainer">
      {{ #each players }}
        <tr>
-       <th>{{ name }}</th> {{ >recordUpdateLine }}
+       <th>{{ name }}</th> 
+        {{ #each n_round ../round_number }}
+          <td><input id="round_score" type='number' style='width:40px' min=0 max=999/></td>
+        {{ /each }}
        </tr>
      {{ /each }}
    </table>
+   </form>
 </template>
 
-<template name="recordUpdateLine">
-  {{ #each score }}
-    <td><input type='number' style='width:40px' min=0 max=999/></td>
-  {{ /each }}
-</template>
+ 

@@ -79,6 +79,14 @@ function checkDupName(array, i){
 }
 
 // Handle events by the user
+Template.recordActive.events({
+  "click #ag_delete " : function(event) {
+    event.preventDefault();
+    var id = event.target.name;
+    GameRecordDB.remove(id);
+  }
+});
+
 Template.record.events({
   "change #NPlayers" : function(event) {
     var nPlayers = event.target.value;
@@ -129,7 +137,8 @@ Template.record.events({
          'irregular' : false,
          'variation' : 'standard', 
          'n_jokers' : 6, 
-         'active' : true})
+         'active' : true, 
+         'round_number' : 1})
       Router.go('record-update', {'_id' : record_id })
     }
     else {
@@ -138,7 +147,6 @@ Template.record.events({
   }
 });
 
-// Let's do the helper functions for the recordActive template
 Template.recordUpdate.helpers({
     round_num : function() {
       return _.range(this.n_rounds)
@@ -161,11 +169,25 @@ Template.recordUpdate.events({
   }
 });
 
-Template.recordActive.events({
-  "click #ag_delete " : function(event) {
-    event.preventDefault();
-    var id = event.target.name;
-    GameRecordDB.remove(id);
+Template.recordUpdate.events({
+  "change #round_score": function(e, t){
+     var done_round = true
+     var round_number = t.data.round_number
+     var scores = e.target.form['round_score']
+     var Players = t.data.players
+     console.log(scores)
+     for (i=0; i<Players.length; i++){
+       for (j=0; j<round_number; j++){
+              Players[i].score[j] = Number(scores[j + i * round_number].value);
+       }
+       if (scores[j].value == '') {
+         done_round = false
+       }
+       if (done_round & (round_number < t.data.n_rounds)){
+         round_number += 1
+       }
+       GameRecordDB.update(t.data._id, {$set: {"round_number":round_number, 'players' : Players}})
+     }
   }
-});
+})
 

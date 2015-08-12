@@ -47,11 +47,17 @@
   CHECK {{ check }} CHECK
   <br>
    This is updating record number {{ _id }}, started {{ date }} with {{ n_players }} players. 
+   <form>
    <table id="RoundContainer">
    <tr>
      <th> Round </th><th> # cards </th>
      {{ #each players }}
-       <th> {{ name }} </th> 
+       <tr>
+       <th>{{ name }}</th> 
+        {{ #each n_round ../round_number }}
+          <td><input id="round_score" type='number' style='width:40px' min=0 max=999/></td>
+        {{ /each }}
+       </tr>
      {{ /each }}
    </tr>
 
@@ -67,10 +73,7 @@
    {{ /each }}
    </table>
    <button> Finish Game </button>
+   </form>
 </template>
 
-<template name="recordUpdateLine">
-  {{ #each score }}
-    <td><input type='number' style='width:40px' min=0 max=999/></td>
-  {{ /each }}
-</template>
+ 

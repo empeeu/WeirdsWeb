@@ -151,43 +151,70 @@ Template.recordUpdate.helpers({
     round_num : function() {
       return _.range(this.n_rounds)
     },
+    round_num_card : function() {
+      data = []
+      for (i=0; i<this.round_number; i++) {
+        data.push({number : i + 1, cards: this.n_cards_per_round[i]})
+      }
+      return data
+    },
+    player_score : function(number) {
+      return this.score[number - 1]
+    },
     data: function(){
       return GameRecordDB.findOne(this._id);
     },
     check : function(){
-      console.log(this) // how does one access the other helpers?
+//       console.log(this) // how does one access the other helpers?
       return this.round_num
     }
 });
 Template.recordUpdate.events({
-  "change input" : function(event) {
+  "change input" : function(event, t) {
     var player_number = event.target.name
     var round = event.target.id
-    record = GameRecordDB.findOne(this._id)
-    record.players[player_number][round] = event.target.value
-    GameRecordDB.update(this._id, {"players": record.players})
+    record = GameRecordDB.findOne(t.data._id)    
+    t.data.players[player_number][round] = event.target.value
+    GameRecordDB.update(t.data._id, {$set: {"players": t.data.players}})
+
+    var done_round = true
+    var round_number = t.data.round_number
+    var Players = t.data.players
+    for (i=0; i<Players.length; i++){
+        for (j=0; j<round_number; j++){
+          if (Players[i].score[j].value == '') {
+            done_round = false
+          }
+        }
+    }
+    if (done_round & (round_number < t.data.n_rounds)){
+        round_number += 1
+    }    
+    GameRecordDB.update(t.data._id, {$set: {"round_number":round_number}})
   }
 });
 
-Template.recordUpdate.events({
-  "change #round_score": function(e, t){
-     var done_round = true
-     var round_number = t.data.round_number
-     var scores = e.target.form['round_score']
-     var Players = t.data.players
-     console.log(scores)
-     for (i=0; i<Players.length; i++){
-       for (j=0; j<round_number; j++){
-              Players[i].score[j] = Number(scores[j + i * round_number].value);
-       }
-       if (scores[j].value == '') {
-         done_round = false
-       }
-       if (done_round & (round_number < t.data.n_rounds)){
-         round_number += 1
-       }
-       GameRecordDB.update(t.data._id, {$set: {"round_number":round_number, 'players' : Players}})
-     }
-  }
-})
+// Template.recordUpdate.events({
+//   "change #round_score": function(e, t){
+//      var done_round = true
+//      console.log(t)
+//      var round_number = t.data.round_number
+//      var scores = e.target.form['round_score']
+//      var Players = t.data.players
+//      console.log(this)
+//      for (i=0; i<Players.length; i++){
+//        for (j=0; j<round_number; j++){
+//               Players[i].score[j] = Number(scores[j + i * round_number].value);
+//        }
+//      }
+//      if (scores[j].value == '') {
+//        done_round = false
+//      }
+//      if (done_round & (round_number < t.data.n_rounds)){
+//        round_number += 1
+//      }
+//      GameRecordDB.update(t.data._id, {$set: {'players' : Players}})
+//      GameRecordDB.update(t.data._id, {$set: {"round_number":round_number}})
+//   }
+// })
 

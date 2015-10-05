@@ -122,7 +122,7 @@ Template.record.events({
       // Make an empty score structure to initialize score for players
       empty_score = [];
       for (i=0; i<n_rounds; i++){
-        empty_score.push(i);
+        empty_score.push('');
       }
       for (i=0; i<Players.length; i++){
         Players[i].score = empty_score;
@@ -166,6 +166,8 @@ Template.recordUpdate.helpers({
     },
     check : function(){
 //       console.log(this) // how does one access the other helpers?
+//       answer, it is not possible. Create another function, and call 
+//       that function in both helpers
       return this.round_num
     }
 });
@@ -174,15 +176,16 @@ Template.recordUpdate.events({
     var player_number = event.target.name
     var round = event.target.id
     record = GameRecordDB.findOne(t.data._id)    
-    t.data.players[player_number][round] = event.target.value
+    t.data.players[player_number].score[round - 1] = event.target.value
     GameRecordDB.update(t.data._id, {$set: {"players": t.data.players}})
 
     var done_round = true
     var round_number = t.data.round_number
     var Players = t.data.players
+//     console.log(Players)
     for (i=0; i<Players.length; i++){
         for (j=0; j<round_number; j++){
-          if (Players[i].score[j].value == '') {
+          if (Players[i].score[j] == '') {
             done_round = false
           }
         }

@@ -1,6 +1,7 @@
 // This Line is needed but is also duplicated on the serverside for now
 WeirdPlayersDB = new Mongo.Collection("weird_players");
 GameRecordDB = new Mongo.Collection("weird_game_record");
+WeirdsVariantsDB = new Mongo.Collection("weird_game_variants");
 
 // The number of players, and default player names
 Session.setDefault('Record:nPlayers', 2)
@@ -135,7 +136,7 @@ Template.record.events({
          'n_starting_cards' : 8,
          'n_cards_per_round' : [8, 7, 6, 5, 4, 3, 2, 1, 1, 2, 3, 4, 5, 6, 7, 8],
          'irregular' : false,
-         'variation' : 'standard', 
+         'variation' : 'Classic', 
          'n_jokers' : 6, 
          'active' : true, 
          'round_number' : 1})
@@ -145,6 +146,13 @@ Template.record.events({
       Session.set('Record:Message', "Please fix all errors before saving record")
     }
   }
+});
+
+// WEIRDPLAYERS_DATALIST template
+Template.wgvariant_datalist.helpers({
+  WeirdVariant : function() {
+    return WeirdsVariantsDB.find();
+  } 
 });
 
 Template.recordUpdate.helpers({
@@ -172,12 +180,47 @@ Template.recordUpdate.helpers({
     }
 });
 Template.recordUpdate.events({
-  "change input" : function(event, t) {
-    var player_number = event.target.name
-    var round = event.target.id
-    record = GameRecordDB.findOne(t.data._id)    
-    t.data.players[player_number].score[round - 1] = event.target.value
-    GameRecordDB.update(t.data._id, {$set: {"players": t.data.players}})
+  "change #startingNumberCards": function(event, t) {
+    var n_starting_cards = event.target.value;
+    var n_rounds = n_starting_cards * 2;
+    var n_cards_per_round = [];
+    for (i=n_starting_cards; i>0; i--){
+      n_cards_per_round.push(i);
+    }
+    for (i=1; i<=n_starting_cards; i++){
+      n_cards_per_round.push(i);
+    }
+//     if (t.data.players[0].score.length < n_rounds){
+      for (i=0; i < n_rounds - t.data.players[0].score.length; i++){
+        for (j=0; j < t.data.players.length; j++){
+          t.data.players[j].score.push('');
+        }
+      }
+//     }
+    var round_number = t.data.round_number;
+    if (round_number > n_rounds){
+      round_number = n_rounds;
+    }
+    GameRecordDB.update(t.data._id, {$set: 
+      {n_rounds: n_rounds,
+      n_starting_cards: n_starting_cards,
+      n_cards_per_round: n_cards_per_round,
+      round_number: round_number
+       }});
+  },
+  "change #variant" : function(event, t) {
+      var variant = event.target.value;
+      GameRecordDB.update(t.data._id, {$set: {'variation': variant}});
+      if (WeirdsVariantsDB.findOne({name: variant}) == undefined) {
+        WeirdsVariantsDB.insert({name: variant})
+      }
+  },
+  "change .player_score_input" : function(event, t) {
+    var player_number = event.target.name;
+    var round = event.target.id;
+    record = GameRecordDB.findOne(t.data._id)    ;
+    t.data.players[player_number].score[round - 1] = event.target.value;
+    GameRecordDB.update(t.data._id, {$set: {"players": t.data.players}});
 
     var done_round = true
     var round_number = t.data.round_number

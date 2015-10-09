@@ -43,11 +43,27 @@
   </li>
 </template>
 
+<template name="wgvariant_datalist">
+  <datalist id="wgvariant">
+    {{ #each WeirdVariant }}
+      <option value="{{ name }}"></option>
+    {{ /each }}
+  </datalist>
+</template>
+
+
 <template name="recordUpdate">
-  CHECK {{ check }} CHECK
   <br>
    This is updating record number {{ _id }}, started {{ date }} with {{ n_players }} players. 
    <form>
+   <div>
+     Weirds Variant: <input list='wgvariant' placeholder="Classic" name="variant" id="variant" value="{{ variation }}"/> 
+     {{ error }}
+     {{ >wgvariant_datalist }}
+   </div>
+     Starting number of cards: <input type='number' min=1 max=20 id="startingNumberCards" value="{{ n_starting_cards }}" style='width:40px'>
+   <div>
+   </div>
    <table id="RoundContainer">
    <tr>
      <th> Round </th><th> # cards </th>
@@ -62,7 +78,7 @@
        {{ #each ../players }}
          <td>
            <input type='number' style='width:40px' min=0 max=999 name="{{ order }}"
-            id="{{ ../number }}" value="{{ player_score ../number}}"/>
+            id="{{ ../number }}" value="{{ player_score ../number}}" class="player_score_input"/>
             
          </td>
        {{ /each }}

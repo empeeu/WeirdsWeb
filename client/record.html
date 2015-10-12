@@ -25,6 +25,14 @@
     {{ /each }}
     </ul>
   </div>
+  <div>
+    <h2> Completed Games </h2>
+    <ul>
+    {{ #each inactiveRecords }}
+      {{ >recordActive }}
+    {{ /each }}
+    </ul>
+  </div>
 </template>
 
 <template name="weirdplayers_datalist">
@@ -54,14 +62,17 @@
 
 <template name="recordUpdate">
   <br>
-   This is updating record number {{ _id }}, started {{ date }} with {{ n_players }} players. 
+   This is updating record number {{ _id }}, started {{ date }} with {{ n_players }} players.
    <form>
    <div>
-     Weirds Variant: <input list='wgvariant' placeholder="Classic" name="variant" id="variant" value="{{ variation }}"/> 
+     Weirds Variant: <input list='wgvariant' placeholder="Classic" name="variant" id="variant" value="{{ variation }}" {{ disabled_function active }}/>
      {{ error }}
      {{ >wgvariant_datalist }}
    </div>
-     Starting number of cards: <input type='number' min=1 max=20 id="startingNumberCards" value="{{ n_starting_cards }}" style='width:40px'>
+     Number of Jokers in Deck: <input type='number' min=1 max=20 id="numberOfJokers" value="{{ n_jokers }}" style='width:40px' {{ disabled_function active }}>
+   <div>
+   </div>
+     Starting number of cards: <input type='number' min=1 max=20 id="startingNumberCards" value="{{ n_starting_cards }}" style='width:40px' {{ disabled_function active }}>
    <div>
    </div>
    <table id="RoundContainer">
@@ -78,14 +89,18 @@
        {{ #each ../players }}
          <td>
            <input type='number' style='width:40px' min=0 max=999 name="{{ order }}"
-            id="{{ ../number }}" value="{{ player_score ../number}}" class="player_score_input"/>
+            id="{{ ../number }}" value="{{ player_score ../number}}" class="player_score_input" {{ disabled_function ../../active }} /> 
             
          </td>
        {{ /each }}
      </tr>
    {{ /each }}
    </table>
-   <button> Finish Game </button>
+   {{ #if active }}
+      <button class="finish_game"> Finish Game </button>
+   {{ else }}
+      <button class="edit_game"> Edit Game </button>
+   {{ /if }}
    </form>
 </template>
 

@@ -28,7 +28,13 @@ Template.record.helpers({
   activeRecords : function() {
     var activeRecords = GameRecordDB.find({active : true});
     return activeRecords
+  },
+  // Inactive records
+  inactiveRecords : function() {
+    var inactiveRecords = GameRecordDB.find({active : false});
+    return inactiveRecords
   }
+
 });
 // WEIRDPLAYERS_DATALIST template
 Template.weirdplayers_datalist.helpers({
@@ -139,6 +145,7 @@ Template.record.events({
          'variation' : 'Classic', 
          'n_jokers' : 6, 
          'active' : true, 
+         'edited' : false,
          'round_number' : 1})
       Router.go('record-update', {'_id' : record_id })
     }
@@ -156,6 +163,15 @@ Template.wgvariant_datalist.helpers({
 });
 
 Template.recordUpdate.helpers({
+    disabled_function : function(active_var){
+      if (active_var){
+        return ''
+      }      
+      else
+      {
+        return 'disabled'
+      }
+    },
     round_num : function() {
       return _.range(this.n_rounds)
     },
@@ -180,6 +196,11 @@ Template.recordUpdate.helpers({
     }
 });
 Template.recordUpdate.events({
+  "change #numberOfJokers": function(event, t) {
+    var n_jokers = event.target.value;
+    GameRecordDB.update(t.data._id, {$set: 
+      {n_jokers: n_jokers}});
+  },
   "change #startingNumberCards": function(event, t) {
     var n_starting_cards = event.target.value;
     var n_rounds = n_starting_cards * 2;
@@ -237,30 +258,13 @@ Template.recordUpdate.events({
         round_number += 1
     }    
     GameRecordDB.update(t.data._id, {$set: {"round_number":round_number}})
+  },
+  "click .finish_game" : function(event, t) {
+      event.preventDefault()
+      GameRecordDB.update(t.data._id, {$set: {"active": false}})
+  },
+  "click .edit_game" : function(event, t) {
+      event.preventDefault()
+      GameRecordDB.update(t.data._id, {$set: {"active": true, "edited": true}})
   }
 });
-
-// Template.recordUpdate.events({
-//   "change #round_score": function(e, t){
-//      var done_round = true
-//      console.log(t)
-//      var round_number = t.data.round_number
-//      var scores = e.target.form['round_score']
-//      var Players = t.data.players
-//      console.log(this)
-//      for (i=0; i<Players.length; i++){
-//        for (j=0; j<round_number; j++){
-//               Players[i].score[j] = Number(scores[j + i * round_number].value);
-//        }
-//      }
-//      if (scores[j].value == '') {
-//        done_round = false
-//      }
-//      if (done_round & (round_number < t.data.n_rounds)){
-//        round_number += 1
-//      }
-//      GameRecordDB.update(t.data._id, {$set: {'players' : Players}})
-//      GameRecordDB.update(t.data._id, {$set: {"round_number":round_number}})
-//   }
-// })
-

@@ -6,10 +6,16 @@ Built on meteor.
 ## Add-on packages
 *These were added using meteor add `<package_name>`*
 
-1. Underscore
-2. Bootstrap
-3. Iron:Router
-
+1. underscore
+2. iron:router
+3. bootstrap
+4. less
+5. nemo64:bootstrap
+6. Clone stylesheet boiler plate
+   cd client
+   git clone https://github.com/DerMambo/stylesheets.git
+   # Delete the .git files in that filder
+   # Make modifications to client/vendor/custom.bootstrap.json
 
 
 ## A few notes

@@ -1,10 +1,107 @@
 <template name="record">
   <h2> Record a Game </h2>
   <div>
+  Debug stuff: NPlayers Session var: {{ nPlayers }} at {{ #each Players }} {{ order }}:{{ name }};  {{ /each }}
   <form class="NPlayers">
     Number of Players:
-    <input type="number" class="number-input" id="n-players" min="2" max="10" step="1" value="{{ nPlayers }}">
+    <input type="number" class="NumberInput" id="NPlayers" min="2" max="10" step="1" value= {{ nPlayers }}>
   </form>
-  There are {{ nPlayers }} players.
+  <form class="PlayerId" id="PlayerId">  
+    {{ #each Players }}
+       Player {{ order }}: <input list='playerName' placeholder="Player Name" name="player" id="player" value="{{ name }}"/> 
+       {{ error }}
+       {{ >weirdplayers_datalist }}
+        <br>
+    {{ /each }}
+  <button id="savebutton" text="Save">Save</button> {{ Message }}
+  </form>
+  </div>
+
+  <div>
+    <h2> Active Games </h2>
+    <ul>
+    {{ #each activeRecords }}
+      {{ >recordActive }}
+    {{ /each }}
+    </ul>
+  </div>
+  <div>
+    <h2> Completed Games </h2>
+    <ul>
+    {{ #each inactiveRecords }}
+      {{ >recordActive }}
+    {{ /each }}
+    </ul>
   </div>
 </template>
+
+<template name="weirdplayers_datalist">
+  <datalist id="playerName">
+    {{ #each WeirdPlayer }}
+      <option value="{{ name }}"></option>
+    {{ /each }}
+  </datalist>
+</template>
+
+<template name="recordActive">
+  <li> 
+    <a href="{{ pathFor 'record-update' _id }}">{{ _id }}</a>,
+    created {{ date }}, with {{ n_players }} players
+    <button id="ag_delete" name="{{ _id }}"> Delete </button>
+  </li>
+</template>
+
+<template name="wgvariant_datalist">
+  <datalist id="wgvariant">
+    {{ #each WeirdVariant }}
+      <option value="{{ name }}"></option>
+    {{ /each }}
+  </datalist>
+</template>
+
+
+<template name="recordUpdate">
+  <br>
+   This is updating record number {{ _id }}, started {{ date }} with {{ n_players }} players.
+   <form>
+   <div>
+     Weirds Variant: <input list='wgvariant' placeholder="Classic" name="variant" id="variant" value="{{ variation }}" {{ disabled_function active }}/>
+     {{ error }}
+     {{ >wgvariant_datalist }}
+   </div>
+     Number of Jokers in Deck: <input type='number' min=1 max=20 id="numberOfJokers" value="{{ n_jokers }}" style='width:40px' {{ disabled_function active }}>
+   <div>
+   </div>
+     Starting number of cards: <input type='number' min=1 max=20 id="startingNumberCards" value="{{ n_starting_cards }}" style='width:40px' {{ disabled_function active }}>
+   <div>
+   </div>
+   <table id="RoundContainer">
+   <tr>
+     <th> Round </th><th> # cards </th>
+     {{ #each players }}
+       <th>{{ name }}</th> 
+     {{ /each }}
+   </tr>
+
+   {{ #each round_num_card }}
+     <tr>
+       <td> {{ number }} </td> <td> {{ cards }} </td>
+       {{ #each ../players }}
+         <td>
+           <input type='number' style='width:40px' min=0 max=999 name="{{ order }}"
+            id="{{ ../number }}" value="{{ player_score ../number}}" class="player_score_input" {{ disabled_function ../../active }} /> 
+            
+         </td>
+       {{ /each }}
+     </tr>
+   {{ /each }}
+   </table>
+   {{ #if active }}
+      <button class="finish_game"> Finish Game </button>
+   {{ else }}
+      <button class="edit_game"> Edit Game </button>
+   {{ /if }}
+   </form>
+</template>
+
+ 

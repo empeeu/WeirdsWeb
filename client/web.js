@@ -7,11 +7,18 @@ if (Meteor.isClient) {
       return Session.get("counter");
     }
   });
-
   Template.home.events({
     'click button': function () {
       // increment the counter when button is clicked
       Session.set("counter", Session.get("counter") + 1);
+    }
+  });
+
+  Template.navItems.helpers({
+    activeIfTemplateIs: function (template) {
+      var currentRoute = Router.current();
+      return currentRoute &&
+        template === currentRoute.route.getName() ? 'active' : '';
     }
   });
 }

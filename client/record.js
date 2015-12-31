@@ -1,3 +1,13 @@
+// TODO:
+// 1. Check to make sure there is only 1 winner (error checking)
+// 2. Running total for every line
+// 3. Track the winner with a startingNumberCards
+// 4. Track the second with a dot (ties ok) <conjecture that this is more important than 1>
+// 5. Track highest with a triangle
+// 6. Track more than 200 score with a square
+// 7. 2 Modes: Need another entry mode that has the running totals (also with checking)
+// 8. Track who deals which round.
+
 // This Line is needed but is also duplicated on the serverside for now
 WeirdPlayersDB = new Mongo.Collection("weird_players");
 GameRecordDB = new Mongo.Collection("weird_game_record");
